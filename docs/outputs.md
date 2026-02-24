@@ -15,7 +15,7 @@ I'm your personal assistant! I can:
   🕐 Tell you the date and time
 
 Type 'quit' to exit
-------------------------------------------------------------
+-------------------------------------------------------------
 
 🤖 You: What time is it?
 
@@ -23,14 +23,14 @@ Type 'quit' to exit
 Agent received: What time is it?
 ============================================================
 
---- Step 1 ---
+---- Step 1 ---
   🔧 Using tool: get_datetime
      Input: {}
      Result: {"date": "2026-02-24", "time": "01:30:41", "day": "Tuesday", "full": "Tuesday, February 24, 2026 at 01:30 AM"}
 
---- Step 2 ---
+---- Step 2 ---
 
---- Final Answer ---
+---- Final Answer ---
 It's currently 1:30 AM on Tuesday, February 24, 2026.
 
 📎 Assistant: It's currently 1:30 AM on Tuesday, February 24, 2026.
@@ -42,14 +42,14 @@ It's currently 1:30 AM on Tuesday, February 24, 2026.
 Agent received: What's the weather in Tokyo?
 ============================================================
 
---- Step 1 ---
+---- Step 1 ---
   🔧 Using tool: get_weather
      Input: {"location": "Tokyo"}
      Result: {"location": "Tokyo, Japan", "temperature_c": 16.3, "temperature_f": 61.3, "windspeed_kmh": 5.4, "description": "Partly cloudy"}
 
---- Step 2 ---
+---- Step 2 ---
 
---- Final Answer ---
+---- Final Answer ---
 The current weather in Tokyo, Japan is:
 - Temperature: 16.3°C (61.3°F)
 - Conditions: Partly cloudy
@@ -71,14 +71,14 @@ It's a pleasant mild day with partly cloudy skies!
 Agent received: What's 20% tip on a $85 dinner?
 ============================================================
 
---- Step 1 ---
+---- Step 1 ---
   🔧 Using tool: calculator
      Input: {"expression": "85 * 0.20"}
      Result: {"result": 17.0}
 
---- Step 2 ---
+---- Step 2 ---
 
---- Final Answer ---
+---- Final Answer ---
 A 20% tip on an $85 dinner would be $17.00.
 
 📎 Assistant: A 20% tip on an $85 dinner would be $17.00.
@@ -90,24 +90,24 @@ A 20% tip on an $85 dinner would be $17.00.
 Agent received: What's the weather in Paris, convert the temperature to Fahrenheit, and save the result to my notes
 ============================================================
 
---- Step 1 ---
+---- Step 1 ---
   🔧 Using tool: get_weather
      Input: {"location": "Paris"}
      Result: {"location": "Paris, France", "temperature_c": 12.5, "temperature_f": 54.5, "windspeed_kmh": 4.8, "description": "Overcast"}
 
---- Step 2 ---
+---- Step 2 ---
   🔧 Using tool: calculator
      Input: {"expression": "(12.5 * 9/5) + 32"}
      Result: {"result": 54.5}
 
---- Step 3 ---
+---- Step 3 ---
   🔧 Using tool: save_note
      Input: {"title": "Paris Weather", "content": "Weather in Paris, France:\n- Temperature: 12.5\u00b0C (54.5\u00b0F)\n- Wind Speed: 4.8 km/h\n- Conditions: Overcast"}
      Result: {"saved": "Paris Weather"}
 
---- Step 4 ---
+---- Step 4 ---
 
---- Final Answer ---
+---- Final Answer ---
 Done! Here's what I found and saved:
 
 **Current weather in Paris, France:**
@@ -128,3 +128,16 @@ The weather information has been saved to your notes under the title "Paris Weat
 ============================================================
 
 🤖 You:
+
+
+## Summary
+
+Look at that Paris question — 4 steps, 3 different tools, all autonomous:
+
+Weather tool → got 12.5°C
+Calculator → converted to 54.5°F (even though the weather tool already returned it — the agent decided to verify)
+Save note → stored it with a clean title and formatted content
+Final answer → summarized everything
+
+That's the ReAct loop working exactly as designed. The agent decided on its own which tools to use, in what order, and when it had enough to answer. You didn't tell it the steps — it figured them out.
+This is the fundamental difference from every other project you've built. MNIST classifies, churn predicts, sentiment labels, stock forecasts, text generator creates, RAG retrieves and answers. The agent plans and acts.
